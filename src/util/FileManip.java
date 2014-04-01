@@ -2,10 +2,13 @@ package util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -13,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import model.Cours;
 import model.Etudiant;
 import model.Inscription;
 import model.ListeCours;
@@ -24,6 +28,48 @@ public class FileManip {
 		
 	}
 	
+	public static void chargerFichierDonnees() {
+		try {
+
+			FileInputStream fstream = new FileInputStream("etudiants.txt");
+			DataInputStream in = new DataInputStream(fstream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String ligne;
+			  
+			while ((ligne = br.readLine()) != null)   {
+				System.out.println(ligne);
+				String[] donnees = ligne.split("\\|");
+				for(String l : donnees)
+					System.out.println(l);
+				
+				Etudiant e = new Etudiant(donnees[0], donnees[1], donnees[2], Integer.parseInt(donnees[3]), Integer.parseInt(donnees[4]), Double.parseDouble(donnees[5]));
+				ListeEtudiants.getInstance().getListe().add(e);
+			}
+
+			in.close();
+		} catch (Exception e) {
+			  System.err.println("Error: " + e.getMessage());
+		}
+		
+		try {
+
+			FileInputStream fstream = new FileInputStream("cours.txt");
+			DataInputStream in = new DataInputStream(fstream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String ligne;
+			  
+			while ((ligne = br.readLine()) != null)   {
+				String[] donnees = ligne.split("\\|");
+				Cours c = new Cours(donnees[0], donnees[1], Integer.parseInt(donnees[2]));
+				ListeCours.getInstance().getListe().add(c);
+			}
+
+			in.close();
+		} catch (Exception e) {
+			  System.err.println("Error: " + e.getMessage());
+		}
+		  
+	}
 	
 	public static void sauvegarder() {
 		sauvegarderEtudiants();
@@ -43,6 +89,24 @@ public class FileManip {
 	    ){
 			ArrayList<Etudiant> liste = (ArrayList<Etudiant>)input.readObject();
 			ListeEtudiants.getInstance().setListe(liste);
+				      
+	    }
+		catch(ClassNotFoundException e){
+			System.out.print("Erreur : " + e.getClass() + "\n");
+	    }
+		catch(IOException e){
+		    System.out.print("Erreur : " + e.getClass() + "\n");
+		}
+	}
+	
+	private static void chargerCours() {
+		try(
+	      InputStream fichier = new FileInputStream("cours.ser");
+	      InputStream buffer = new BufferedInputStream(fichier);
+	      ObjectInput input = new ObjectInputStream (buffer);
+	    ){
+			ArrayList<Cours> liste = (ArrayList<Cours>)input.readObject();
+			ListeCours.getInstance().setListe(liste);
 				      
 	    }
 		catch(ClassNotFoundException e){
