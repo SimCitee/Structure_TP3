@@ -1,0 +1,20 @@
+INF1010|Reseaux d'ordinateurs II|40
+INF1011|Genie logiciel|55
+INF1014|Aspects juridiques de l'informatique|60
+INF1018|Analyse de programme|50
+PIF1006|Mathematiques pour informaticiens II|32
+TIN1003|Science, technologie et societe|38
+INF1004|Structures de donnees et algorithmes|60
+INF1007|Conception de logiciels|45
+INF1009|Reseaux d'ordinateurs I|40
+PIF1005|Mathematique pour informaticien I|45
+SMI1002|Bases de donnees II|43
+INF1006|Analyse et modelisation|55
+INF1035|Concepts avances en objet|70
+SIF1015|Systemes d'exploitation|80
+STT1001|Probabilites et statistiques|90
+MPU1018|Algebre lineaire avancee|35
+MPU1017|Algebre lineaire et applications|47
+MPU1015|Algebre|33
+MAP1003|Analyse numerique|46
+SIF1053|Architecture des ordinateurs|60
