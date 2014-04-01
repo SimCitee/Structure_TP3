@@ -1,6 +1,8 @@
 package model;
 
-public class Inscription {
+import java.io.Serializable;
+
+public class Inscription implements Serializable {
 
 	private Etudiant etudiant;
 	private Inscription nextEtudiant;

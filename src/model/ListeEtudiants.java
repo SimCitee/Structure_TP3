@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ListeEtudiants {
 	
 	private static ListeEtudiants instance = null;
-	private ArrayList<Etudiant> liste;
+	private static ArrayList<Etudiant> liste;
 	
 	protected ListeEtudiants() {
 		
@@ -15,6 +15,7 @@ public class ListeEtudiants {
 	public static ListeEtudiants getInstance() {
 		if (instance == null) {
 			instance = new ListeEtudiants();
+			liste = new ArrayList<Etudiant>();
 		}
 		
 		return instance;

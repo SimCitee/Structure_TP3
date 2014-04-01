@@ -49,7 +49,6 @@ public class Interface {
 	public static void menuPrincipal()
 	{
 		
-		
 		String choixUtilisateur;
 		
 		do
@@ -77,7 +76,6 @@ public class Interface {
 		    clearConsole();
 		} while (true);
 	
-		
 		switch(choixUtilisateur)
 		{
 		

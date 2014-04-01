@@ -6,14 +6,12 @@ public class Cours implements Serializable {
 	private String sigle;
 	private String nom;
 	private int maxEtudiant;
-	private int nbInscription;
 	private Inscription premierEtudiant;
 	
-	public Cours(String sigle, String nom, int maxEtudiant, int nbInscription) {
+	public Cours(String sigle, String nom, int maxEtudiant) {
 		this.sigle = sigle;
 		this.nom = nom;
 		this.maxEtudiant = maxEtudiant;
-		this.nbInscription = nbInscription;
 	}
 	
 	public String getSigle() {
@@ -33,12 +31,6 @@ public class Cours implements Serializable {
 	}
 	public void setMaxEtudiant(int maxEtudiant) {
 		this.maxEtudiant = maxEtudiant;
-	}
-	public int getNbInscription() {
-		return nbInscription;
-	}
-	public void setNbInscription(int nbInscription) {
-		this.nbInscription = nbInscription;
 	}
 	public Inscription getPremierEtudiant() {
 		return premierEtudiant;
