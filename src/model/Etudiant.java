@@ -12,7 +12,7 @@ public class Etudiant implements Serializable {
 	private double moyenne;
 	private Inscription premierCours;
 	
-	public Etudiant(String codePermanent, String nom, String prenom, int noProgramme, int credit, double moyenne, int nbCoursInscrit) {
+	public Etudiant(String codePermanent, String nom, String prenom, int noProgramme, int credit, double moyenne) {
 		this.codePermanent = codePermanent;
 		this.nom = nom;
 		this.prenom = prenom;
