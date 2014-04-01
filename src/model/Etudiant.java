@@ -10,7 +10,16 @@ public class Etudiant implements Serializable {
 	private int noProgramme;
 	private int credit;
 	private double moyenne;
-	private int nbCoursInscrit;
+	private Inscription premierCours;
+	
+	public Etudiant(String codePermanent, String nom, String prenom, int noProgramme, int credit, double moyenne, int nbCoursInscrit) {
+		this.codePermanent = codePermanent;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.noProgramme = noProgramme;
+		this.credit = credit;
+		this.moyenne = moyenne;
+	}
 	
 	public String getCodePermanent() {
 		return codePermanent;
@@ -48,11 +57,12 @@ public class Etudiant implements Serializable {
 	public void setMoyenne(double moyenne) {
 		this.moyenne = moyenne;
 	}
-	public int getNbCoursInscrit() {
-		return nbCoursInscrit;
+	public Inscription getPremierCours() {
+		return premierCours;
 	}
-	public void setNbCoursInscrit(int nbCoursInscrit) {
-		this.nbCoursInscrit = nbCoursInscrit;
+
+	public void setPremierCours(Inscription premierCours) {
+		this.premierCours = premierCours;
 	}
 	
 }

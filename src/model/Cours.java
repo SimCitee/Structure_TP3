@@ -7,6 +7,14 @@ public class Cours implements Serializable {
 	private String nom;
 	private int maxEtudiant;
 	private int nbInscription;
+	private Inscription premierEtudiant;
+	
+	public Cours(String sigle, String nom, int maxEtudiant, int nbInscription) {
+		this.sigle = sigle;
+		this.nom = nom;
+		this.maxEtudiant = maxEtudiant;
+		this.nbInscription = nbInscription;
+	}
 	
 	public String getSigle() {
 		return sigle;
@@ -31,6 +39,12 @@ public class Cours implements Serializable {
 	}
 	public void setNbInscription(int nbInscription) {
 		this.nbInscription = nbInscription;
+	}
+	public Inscription getPremierEtudiant() {
+		return premierEtudiant;
+	}
+	public void setPremierEtudiant(Inscription premierEtudiant) {
+		this.premierEtudiant = premierEtudiant;
 	}
 
 }
