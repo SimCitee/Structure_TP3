@@ -24,13 +24,16 @@ public class Etudiant implements Serializable {
 	public void ajouterCours(Inscription nouvelleInscription) {
 		Inscription etudiantInscription;
 		
-		etudiantInscription = this.getPremierCours();
+		etudiantInscription = this.premierCours;
 		
-		while(etudiantInscription != null) {
-			etudiantInscription = etudiantInscription.getNextCours();
+		if(etudiantInscription != null) {
+			while(etudiantInscription != null) {
+				etudiantInscription = etudiantInscription.getNextCours();
+			}
+			etudiantInscription.setNextCours(nouvelleInscription);
+		} else {
+			this.premierCours = nouvelleInscription;
 		}
-		
-		etudiantInscription.setNextCours(nouvelleInscription);
 	}
 	
 	public String getCodePermanent() {

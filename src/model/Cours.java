@@ -17,13 +17,17 @@ public class Cours implements Serializable {
 	public void ajouterEtudiant(Inscription nouvelleInscription) {
 		Inscription coursInscription;
 		
-		coursInscription = this.getPremierEtudiant();
+		coursInscription = this.premierEtudiant;
 		
-		while(coursInscription != null) {
-			coursInscription = coursInscription.getNextEtudiant();
+		if(coursInscription != null) {
+			while(coursInscription != null) {
+				coursInscription = coursInscription.getNextEtudiant();
+			}
+			
+			coursInscription.setNextEtudiant(nouvelleInscription);
+		} else {
+			this.premierEtudiant = nouvelleInscription;
 		}
-		
-		coursInscription.setNextEtudiant(nouvelleInscription);
 	}
 	public String getSigle() {
 		return sigle;

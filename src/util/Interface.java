@@ -156,8 +156,12 @@ public class Interface {
 	
 	private static void annulerInscription() {
 		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
+		int itNoCours = 0;
 		int itNoEtudiant = 0;
 		String noEtudiant;
+		String noCours;
+		Etudiant etudiant;
+		Inscription etudiantInscription;
 		
 		for (Etudiant e : listeEtudiant) {
 			System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
@@ -165,6 +169,20 @@ public class Interface {
 		
 		System.out.print("Entrez numero de l'etudiant : ");
 		noEtudiant = lecture();
+		
+		etudiant = listeEtudiant.get(Integer.parseInt(noEtudiant) - 1);
+		
+		etudiantInscription = etudiant.getPremierCours();
+		
+		Cours cours;
+		while(etudiantInscription != null) {
+			cours = etudiantInscription.getCours();
+			System.out.println(itNoCours++ + ". " + cours.getSigle() + " " + cours.getNom());
+			etudiantInscription = etudiantInscription.getNextCours();
+		}
+		
+		System.out.print("Entrez numero du cours : ");
+		noCours = lecture();
 	}
 	
 	private void afficherCoursEtudiant() {
