@@ -20,7 +20,7 @@ public class Cours implements Serializable {
 		coursInscription = this.premierEtudiant;
 		
 		if(coursInscription != null) {
-			while(coursInscription != null) {
+			while(coursInscription.getNextEtudiant() != null) {
 				coursInscription = coursInscription.getNextEtudiant();
 			}
 			

@@ -27,7 +27,7 @@ public class Etudiant implements Serializable {
 		etudiantInscription = this.premierCours;
 		
 		if(etudiantInscription != null) {
-			while(etudiantInscription != null) {
+			while(etudiantInscription.getNextCours() != null) {
 				etudiantInscription = etudiantInscription.getNextCours();
 			}
 			etudiantInscription.setNextCours(nouvelleInscription);
