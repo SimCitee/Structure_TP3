@@ -153,8 +153,8 @@ public class Interface {
 		Etudiant etudiant;
 		Cours cours;
 		Inscription nouvelleInscription;
-		int itNoCours = 0;
-		int itNoEtudiant = 0;
+		int itNoCours = 1;
+		int itNoEtudiant = 1;
 		
 		for (Etudiant e : listeEtudiant) {
 			System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
@@ -184,8 +184,8 @@ public class Interface {
 	private static Etudiant annulerInscription() {
 		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
 		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
-		int itNoCours = 0;
-		int itNoEtudiant = 0;
+		int itNoCours = 1;
+		int itNoEtudiant = 1;
 		String noEtudiant;
 		String noCours;
 		Etudiant etudiant;
@@ -261,7 +261,7 @@ public class Interface {
 	private static void modifierInscripton() {
 		Etudiant etudiant;
 		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
-		int itNoCours = 0;
+		int itNoCours = 1;
 		String noCours;
 		Cours cours;
 		Inscription nouvelleInscription;
