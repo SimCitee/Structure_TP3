@@ -15,12 +15,14 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import model.Cours;
 import model.Etudiant;
 import model.Inscription;
 import model.ListeCours;
 import model.ListeEtudiants;
+import util.Comparateur;
 
 public class FileManip {
 	
@@ -117,7 +119,11 @@ public class FileManip {
 	    ){
 			ArrayList<Etudiant> liste = (ArrayList<Etudiant>)input.readObject();
 			ListeEtudiants.getInstance().setListe(liste);
-				      
+			
+			Comparateur c = new Comparateur();
+			
+			// Trier en ordre de code permanent les etudiants
+			Collections.sort(ListeEtudiants.getInstance().getListe(), c.getComprateurEtudiant());
 	    }
 		catch(ClassNotFoundException e){
 			System.out.print("Erreur : " + e.getClass() + "\n");
@@ -135,6 +141,11 @@ public class FileManip {
 	    ){
 			ArrayList<Cours> liste = (ArrayList<Cours>)input.readObject();
 			ListeCours.getInstance().setListe(liste);
+			
+			Comparateur c = new Comparateur();
+			
+			// Trier en ordre de sigle les cours
+			Collections.sort(ListeCours.getInstance().getListe(), c.getComparateurCours());
 				      
 	    }
 		catch(ClassNotFoundException e){
