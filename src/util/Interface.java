@@ -107,6 +107,11 @@ public class Interface {
 				clearConsole();
 				clearConsole();
 				break;*/
+			case "4" : 
+				clearConsole();
+				clearConsole();
+				afficherCoursEtudiant();
+				break;
 				
 			default :
 				clearConsole();
@@ -185,7 +190,7 @@ public class Interface {
 		noCours = lecture();
 	}
 	
-	private void afficherCoursEtudiant() {
+	private static void afficherCoursEtudiant() {
 		
 		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
 		int i = 1;
@@ -215,7 +220,7 @@ public class Interface {
 			System.out.println("L'etudiant choisit n'est inscrit à aucun cours!");
 	}
 
-	private void afficherCours(Inscription inscription) {
+	private static void afficherCours(Inscription inscription) {
 		System.out.println(inscription.getCours().getSigle() + " | " + inscription.getCours().getNom());
 		
 		if (inscription.getNextCours() != null)

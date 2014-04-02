@@ -71,7 +71,7 @@ public class FileManip {
 		
 		try {
 
-			FileInputStream fstream = new FileInputStream("cours.txt");
+			FileInputStream fstream = new FileInputStream("inscriptions.txt");
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String ligne;
@@ -85,7 +85,7 @@ public class FileManip {
 				Inscription i = new Inscription(e, c);
 				
 				e.ajouterCours(i);
-				c.ajouterEtudiant(i);
+				/*c.ajouterEtudiant(i);*/
 			}
 
 			in.close();

@@ -11,9 +11,6 @@ public class Program {
 		
 		FileManip.chargerFichierDonnees();
 		
-		int countEtudiants = ListeEtudiants.getInstance().getListe().size();
-		int countCours = ListeCours.getInstance().getListe().size();
-		
 		layout.menuPrincipal();
 		
 	}
