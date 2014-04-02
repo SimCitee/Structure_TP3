@@ -3,7 +3,14 @@ package util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader; 
+import java.util.ArrayList;
 import java.util.Iterator;
+
+import model.Cours;
+import model.Etudiant;
+import model.Inscription;
+import model.ListeCours;
+import model.ListeEtudiants;
 
 public class Interface {
 	
@@ -82,14 +89,18 @@ public class Interface {
 			case "0" :
 				System.exit(0);
 				break;
-			/*case "1" :
+			case "1" :
 				clearConsole();
 				clearConsole();
+				
+				annulerInscription();
 				break;
 				
-			case "2" :
+			/*case "2" :
 				clearConsole();
 				clearConsole();
+				
+				modificationInscription();
 				break;
 				
 			case "3" : 
@@ -104,9 +115,55 @@ public class Interface {
 		}
 		
 	}
-	
+
 	public static boolean isNumeric(String s) {  
 	    return s.matches("[-+]?\\d*\\.?\\d+");  
 	}
 
+	private static void inscrireEtudiant() {
+		String noEtudiant;
+		String noCours;
+		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
+		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
+		Etudiant etudiant;
+		Cours cours;
+		Inscription nouvelleInscription;
+		int itNoCours = 0;
+		int itNoEtudiant = 0;
+		
+		for (Etudiant e : listeEtudiant) {
+			System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
+		}
+		
+		System.out.print("Entrez numero de l'etudiant : ");
+		noEtudiant = lecture();
+		
+		for (Cours c : listeCours) {
+			System.out.println(itNoCours++ + ". " + c.getSigle() + " " + c.getNom());
+		}
+		
+		System.out.print("Entrez numero du cours : ");
+		noCours = lecture();
+		
+		etudiant = listeEtudiant.get(Integer.parseInt(noEtudiant) - 1);
+		cours = listeCours.get(Integer.parseInt(noCours) - 1);
+		
+		nouvelleInscription = new Inscription(etudiant, cours);
+		
+		etudiant.ajouterCours(nouvelleInscription);
+		cours.ajouterEtudiant(nouvelleInscription);
+	}
+	
+	private static void annulerInscription() {
+		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
+		int itNoEtudiant = 0;
+		String noEtudiant;
+		
+		for (Etudiant e : listeEtudiant) {
+			System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
+		}
+		
+		System.out.print("Entrez numero de l'etudiant : ");
+		noEtudiant = lecture();
+	}
 }

@@ -21,6 +21,18 @@ public class Etudiant implements Serializable {
 		this.moyenne = moyenne;
 	}
 	
+	public void ajouterCours(Inscription nouvelleInscription) {
+		Inscription etudiantInscription;
+		
+		etudiantInscription = this.getPremierCours();
+		
+		while(etudiantInscription != null) {
+			etudiantInscription = etudiantInscription.getNextCours();
+		}
+		
+		etudiantInscription.setNextCours(nouvelleInscription);
+	}
+	
 	public String getCodePermanent() {
 		return codePermanent;
 	}

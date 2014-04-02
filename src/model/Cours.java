@@ -14,6 +14,17 @@ public class Cours implements Serializable {
 		this.maxEtudiant = maxEtudiant;
 	}
 	
+	public void ajouterEtudiant(Inscription nouvelleInscription) {
+		Inscription coursInscription;
+		
+		coursInscription = this.getPremierEtudiant();
+		
+		while(coursInscription != null) {
+			coursInscription = coursInscription.getNextEtudiant();
+		}
+		
+		coursInscription.setNextEtudiant(nouvelleInscription);
+	}
 	public String getSigle() {
 		return sigle;
 	}
