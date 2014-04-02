@@ -101,6 +101,7 @@ public class Interface {
 				clearConsole();
 				
 				annulerInscription();
+				menuPrincipal();
 				break;
 				
 			case "3" : 
@@ -176,6 +177,8 @@ public class Interface {
 		
 		etudiant.ajouterCours(nouvelleInscription);
 		cours.ajouterEtudiant(nouvelleInscription);
+		
+		menuPrincipal();
 	}
 	
 	private static Etudiant annulerInscription() {
@@ -278,6 +281,8 @@ public class Interface {
 		
 		etudiant.ajouterCours(nouvelleInscription);
 		cours.ajouterEtudiant(nouvelleInscription);
+		
+		menuPrincipal();
 	}
 
 	private static void afficherCoursEtudiant() {
