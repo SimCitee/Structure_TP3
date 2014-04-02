@@ -93,20 +93,22 @@ public class Interface {
 				clearConsole();
 				clearConsole();
 				
-				annulerInscription();
+				inscrireEtudiant();
 				break;
 				
-			/*case "2" :
+			case "2" :
 				clearConsole();
 				clearConsole();
 				
-				modificationInscription();
+				annulerInscription();
 				break;
 				
 			case "3" : 
 				clearConsole();
 				clearConsole();
-				break;*/
+				
+				modifierInscripton();
+				break;
 			case "4" : 
 				clearConsole();
 				clearConsole();
@@ -176,7 +178,7 @@ public class Interface {
 		cours.ajouterEtudiant(nouvelleInscription);
 	}
 	
-	private static void annulerInscription() {
+	private static Etudiant annulerInscription() {
 		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
 		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
 		int itNoCours = 0;
@@ -210,6 +212,8 @@ public class Interface {
 		cours = listeCours.get(Integer.parseInt(noCours) - 1);
 		
 		supprimerCours(etudiant, cours);
+		
+		return etudiant;
 	}
 	
 	private static void supprimerCours(Etudiant etudiant, Cours cours) {
@@ -250,6 +254,31 @@ public class Interface {
 			} while(coursInscription != null);
 		}
 	}
+	
+	private static void modifierInscripton() {
+		Etudiant etudiant;
+		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
+		int itNoCours = 0;
+		String noCours;
+		Cours cours;
+		Inscription nouvelleInscription;
+		
+		etudiant = annulerInscription();
+		
+		for (Cours c : listeCours) {
+			System.out.println(itNoCours++ + ". " + c.getSigle() + " " + c.getNom());
+		}
+		
+		System.out.print("Entrez numero du cours : ");
+		noCours = lecture();
+		
+		cours = listeCours.get(Integer.parseInt(noCours) - 1);
+		
+		nouvelleInscription = new Inscription(etudiant, cours);
+		
+		etudiant.ajouterCours(nouvelleInscription);
+		cours.ajouterEtudiant(nouvelleInscription);
+	}
 
 	private static void afficherCoursEtudiant() {
 		
@@ -280,7 +309,7 @@ public class Interface {
 				afficherCours(choix.getPremierCours());
 			}
 			else
-				System.out.println("L'etudiant choisit n'est inscrit a  aucun cours!");
+				System.out.println("L'etudiant choisit n'est inscrit aï¿½ aucun cours!");
 		} else
 			System.out.println("Il n'y a pas d'etudiants");
 		
