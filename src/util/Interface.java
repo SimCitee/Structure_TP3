@@ -178,11 +178,13 @@ public class Interface {
 	
 	private static void annulerInscription() {
 		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
+		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
 		int itNoCours = 0;
 		int itNoEtudiant = 0;
 		String noEtudiant;
 		String noCours;
 		Etudiant etudiant;
+		Cours cours;
 		Inscription etudiantInscription;
 		
 		for (Etudiant e : listeEtudiant) {
@@ -196,7 +198,6 @@ public class Interface {
 		
 		etudiantInscription = etudiant.getPremierCours();
 		
-		Cours cours;
 		while(etudiantInscription != null) {
 			cours = etudiantInscription.getCours();
 			System.out.println(itNoCours++ + ". " + cours.getSigle() + " " + cours.getNom());
@@ -205,8 +206,51 @@ public class Interface {
 		
 		System.out.print("Entrez numero du cours : ");
 		noCours = lecture();
+		
+		cours = listeCours.get(Integer.parseInt(noCours) - 1);
+		
+		supprimerCours(etudiant, cours);
 	}
 	
+	private static void supprimerCours(Etudiant etudiant, Cours cours) {
+		Inscription etudiantInscription;
+		Inscription tempEtudiantInscription;
+		Inscription coursInscription;
+		Inscription tempCoursInscription;
+		
+		etudiantInscription = etudiant.getPremierCours();
+		tempEtudiantInscription = etudiantInscription;
+		
+		if(etudiantInscription != null) {
+			do {
+				if(etudiantInscription.getCours().equals(cours)) {
+					tempEtudiantInscription.setNextCours(etudiantInscription.getNextCours());
+					break;
+				}
+				
+				tempEtudiantInscription = etudiantInscription;
+				etudiantInscription = etudiantInscription.getNextCours();
+				
+			} while(etudiantInscription != null);
+		}
+		
+		coursInscription = cours.getPremierEtudiant();
+		tempCoursInscription = coursInscription;
+		
+		if(etudiantInscription != null) {
+			do {
+				if(coursInscription.equals(etudiantInscription)) {
+					tempCoursInscription.setNextEtudiant(coursInscription.getNextEtudiant());
+					break;
+				}
+				
+				tempCoursInscription = coursInscription;
+				coursInscription = coursInscription.getNextEtudiant();
+				
+			} while(coursInscription != null);
+		}
+	}
+
 	private static void afficherCoursEtudiant() {
 		
 		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
