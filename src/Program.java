@@ -14,10 +14,7 @@ public class Program {
 		int countEtudiants = ListeEtudiants.getInstance().getListe().size();
 		int countCours = ListeCours.getInstance().getListe().size();
 		
-		System.out.println(String.valueOf(countEtudiants));
-		System.out.println(String.valueOf(countCours));
-		
-		//layout.menuPrincipal();
+		layout.menuPrincipal();
 		
 	}
 

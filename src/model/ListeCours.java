@@ -28,6 +28,14 @@ public class ListeCours {
 	public void setListe(ArrayList<Cours> liste) {
 		this.liste = liste;
 	}
-
+	
+	public Cours chercherCours(String sigle) {
+		
+		for (Cours cours : liste) {
+			if (sigle.equalsIgnoreCase(cours.getSigle()))
+				return cours;
+		}
+		return null;
+	}
 }
 

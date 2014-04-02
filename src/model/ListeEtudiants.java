@@ -28,5 +28,14 @@ public class ListeEtudiants {
 	public void setListe(ArrayList<Etudiant> liste) {
 		this.liste = liste;
 	}
+	
+	public Etudiant chercherEtudiant(String codePermanent) {
+		
+		for (Etudiant etudiant : liste) {
+			if (codePermanent.equalsIgnoreCase(etudiant.getCodePermanent()))
+				return etudiant;
+		}
+		return null;
+	}
 
 }

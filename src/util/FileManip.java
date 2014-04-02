@@ -68,6 +68,30 @@ public class FileManip {
 		} catch (Exception e) {
 			  System.err.println("Error: " + e.getMessage());
 		}
+		
+		try {
+
+			FileInputStream fstream = new FileInputStream("cours.txt");
+			DataInputStream in = new DataInputStream(fstream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String ligne;
+			  
+			while ((ligne = br.readLine()) != null)   {
+				String[] donnees = ligne.split("\\|");
+				
+				Etudiant e = ListeEtudiants.getInstance().chercherEtudiant(donnees[0]);
+				Cours c = ListeCours.getInstance().chercherCours(donnees[1]);
+				
+				Inscription i = new Inscription(e, c);
+				
+				e.ajouterCours(i);
+				c.ajouterEtudiant(i);
+			}
+
+			in.close();
+		} catch (Exception e) {
+			  System.err.println("Error: " + e.getMessage());
+		}
 		  
 	}
 	
