@@ -112,6 +112,23 @@ public class Interface {
 				clearConsole();
 				afficherCoursEtudiant();
 				break;
+			case "5" : 
+				clearConsole();
+				clearConsole();
+				afficherEtudiantCours();
+				break;
+			case "6" : 
+				clearConsole();
+				clearConsole();
+				FileManip.sauvegarder();
+				menuPrincipal();
+				break;
+			case "7" : 
+				clearConsole();
+				clearConsole();
+				FileManip.charger();
+				menuPrincipal();
+				break;
 				
 			default :
 				clearConsole();
@@ -205,19 +222,26 @@ public class Interface {
 				System.out.println(i + ". " + etudiant.getCodePermanent());
 			i++;
 		}
-		System.out.println("Choisissez l'etudiant dont vous voulez afficher les cours : ");
-		choixEtudiant = Interface.lecture();
 		
-		element = Integer.parseInt(choixEtudiant);
+		if (i > 1) {
+			System.out.println("Choisissez l'etudiant dont vous voulez afficher les cours : ");
+			choixEtudiant = Interface.lecture();
+			
+			element = Integer.parseInt(choixEtudiant);
+			
+			choix = listeEtudiant.get(element-1);
+			
+			if (choix.getPremierCours() != null) {
+				System.out.println("Liste des cours de l'etudiant : ");
+				afficherCours(choix.getPremierCours());
+			}
+			else
+				System.out.println("L'etudiant choisit n'est inscrit a� aucun cours!");
+		} else
+			System.out.println("Il n'y a pas d'etudiants");
 		
-		choix = listeEtudiant.get(element-1);
-		
-		if (choix.getPremierCours() != null) {
-			System.out.println("Liste des cours de l'étudiant : ");
-			afficherCours(choix.getPremierCours());
-		}
-		else
-			System.out.println("L'etudiant choisit n'est inscrit à aucun cours!");
+		lecture();
+		menuPrincipal();
 	}
 
 	private static void afficherCours(Inscription inscription) {
@@ -227,7 +251,7 @@ public class Interface {
 			afficherCours(inscription.getNextCours());
 	}
 	
-	private void afficherEtudiantCours() {
+	private static void afficherEtudiantCours() {
 		
 		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
 		int i = 1;
@@ -242,22 +266,28 @@ public class Interface {
 				System.out.println(i + ". " + cours.getSigle());
 			i++;
 		}
-		System.out.println("Choisissez le cours dont vous voulez afficher les etudiants : ");
-		choixCours = Interface.lecture();
+		if (i > 1) {
+			System.out.println("Choisissez le cours dont vous voulez afficher les etudiants : ");
+			choixCours = Interface.lecture();
+			
+			element = Integer.parseInt(choixCours);
+			
+			choix = listeCours.get(element-1);
+			
+			if (choix.getPremierEtudiant() != null) {
+				System.out.println("Liste des etudiants du cours : ");
+				afficherEtudiant(choix.getPremierEtudiant());
+			}
+			else
+				System.out.println("Il n'y a aucun etudiant inscrit au cours choisit!");
+		} else
+			System.out.println("Il n'y a pas de cours");
 		
-		element = Integer.parseInt(choixCours);
-		
-		choix = listeCours.get(element-1);
-		
-		if (choix.getPremierEtudiant() != null) {
-			System.out.println("Liste des etudiants du cours : ");
-			afficherEtudiant(choix.getPremierEtudiant());
-		}
-		else
-			System.out.println("Il n'y a aucun etudiant inscrit au cours choisit!");
+		lecture();
+		menuPrincipal();
 	}
 	
-	private void afficherEtudiant(Inscription inscription) {
+	private static void afficherEtudiant(Inscription inscription) {
 		System.out.println(inscription.getEtudiant().getNom() + ", " + inscription.getEtudiant().getPrenom() + " (" + inscription.getEtudiant().getCodePermanent() + ")");
 		
 		if (inscription.getNextEtudiant() != null)

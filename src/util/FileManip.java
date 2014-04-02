@@ -37,11 +37,8 @@ public class FileManip {
 			String ligne;
 			  
 			while ((ligne = br.readLine()) != null)   {
-				System.out.println(ligne);
 				String[] donnees = ligne.split("\\|");
-				for(String l : donnees)
-					System.out.println(l);
-				
+
 				Etudiant e = new Etudiant(donnees[0], donnees[1], donnees[2], Integer.parseInt(donnees[3]), Integer.parseInt(donnees[4]), Double.parseDouble(donnees[5]));
 				ListeEtudiants.getInstance().getListe().add(e);
 			}
@@ -85,7 +82,7 @@ public class FileManip {
 				Inscription i = new Inscription(e, c);
 				
 				e.ajouterCours(i);
-				/*c.ajouterEtudiant(i);*/
+				c.ajouterEtudiant(i);
 			}
 
 			in.close();
@@ -99,10 +96,17 @@ public class FileManip {
 		sauvegarderEtudiants();
 		sauvegarderCours();
 		sauvegarderInscription();
+		
+		System.out.println("Les donnees ont ete enregistrees dans les fichiers.");
+		Interface.lecture();
 	}
 	
 	public static void charger() {
 		chargerEtudiants();
+		chargerCours();
+		
+		System.out.println("Les donnees ont ete chargees.");
+		Interface.lecture();
 	}
 	
 	private static void chargerEtudiants() {
@@ -132,6 +136,28 @@ public class FileManip {
 			ArrayList<Cours> liste = (ArrayList<Cours>)input.readObject();
 			ListeCours.getInstance().setListe(liste);
 				      
+	    }
+		catch(ClassNotFoundException e){
+			System.out.print("Erreur : " + e.getClass() + "\n");
+	    }
+		catch(IOException e){
+		    System.out.print("Erreur : " + e.getClass() + "\n");
+		}
+	}
+	
+	private static void chargerInscription() {
+		try(
+	      InputStream fichier = new FileInputStream("inscriptions.ser");
+	      InputStream buffer = new BufferedInputStream(fichier);
+	      ObjectInput input = new ObjectInputStream (buffer);
+	    ){
+			ArrayList<Inscription> liste = (ArrayList<Inscription>)input.readObject();
+			
+			for(Inscription i : liste) {
+				Etudiant e = i.getEtudiant();
+				e.ajouterCours(i);
+			}
+			
 	    }
 		catch(ClassNotFoundException e){
 			System.out.print("Erreur : " + e.getClass() + "\n");
@@ -214,20 +240,6 @@ public class FileManip {
 	    }
 		
 		
-	}
-	
-	
-	// deserialisation de la liste de transactions
-	public void charger2() {
-		try(
-	      InputStream fichier = new FileInputStream("transactions.ser");
-	      InputStream buffer = new BufferedInputStream(fichier);
-	      ObjectInput input = new ObjectInputStream (buffer);
-	    ){
-	    }
-		catch(IOException e){
-		    System.out.print("Erreur : " + e.getClass() + "\n");
-		}
 	}
 
 }

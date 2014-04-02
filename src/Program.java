@@ -9,7 +9,7 @@ public class Program {
 		
 		Interface layout = new Interface();
 		
-		FileManip.chargerFichierDonnees();
+		//FileManip.chargerFichierDonnees();
 		
 		layout.menuPrincipal();
 		
