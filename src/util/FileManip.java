@@ -24,13 +24,18 @@ import model.ListeCours;
 import model.ListeEtudiants;
 import util.Comparateur;
 
+// Classe permettant la manipulation des fichiers
 public class FileManip {
 	
+	// Constructeur vide de la classe FileManip
 	public FileManip() {
 		
 	}
-	
+	// Methode permettant la lecture des donnees dans les fichiers
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	public static void chargerFichierDonnees() {
+		// Lecture des donnees des etudiants
 		try {
 
 			FileInputStream fstream = new FileInputStream("etudiants.txt");
@@ -50,6 +55,7 @@ public class FileManip {
 			  System.err.println("Error: " + e.getMessage());
 		}
 		
+		// Lecture des donnees des cours
 		try {
 
 			FileInputStream fstream = new FileInputStream("cours.txt");
@@ -68,6 +74,7 @@ public class FileManip {
 			  System.err.println("Error: " + e.getMessage());
 		}
 		
+		// Lecture des donnees des inscriptions
 		try {
 
 			FileInputStream fstream = new FileInputStream("inscriptions.txt");
@@ -94,11 +101,15 @@ public class FileManip {
 		  
 	}
 	
+	// Methode permettant de sauvegarder les donnees dans les fichiers
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	public static void sauvegarder() {
-		
+		// Verification si la liste d'etudiants contient des donnees
 		if(ListeEtudiants.getInstance().getListe().size() > 0)
 			sauvegarderEtudiants();
 		
+		// Verification si la liste des cours contient des donnees
 		if(ListeCours.getInstance().getListe().size() > 0)
 			sauvegarderCours();
 		
@@ -108,22 +119,28 @@ public class FileManip {
 		Interface.lecture();
 	}
 	
+	// Methode permettant de charger les donnees des fichiers
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	public static void charger() {
-		chargerEtudiants();
-		chargerCours();
+		chargerEtudiants(); // Chargement des etudiants
+		chargerCours();     // Chargement des cours
 		
 		System.out.println("Les donnees ont ete chargees.");
 		Interface.lecture();
 	}
 	
+	// Methode permettant de charger les donnees des etudiants
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	private static void chargerEtudiants() {
 		try(
 	      InputStream fichier = new FileInputStream("etudiants.ser");
 	      InputStream buffer = new BufferedInputStream(fichier);
 	      ObjectInput input = new ObjectInputStream (buffer);
 	    ){
-			ArrayList<Etudiant> liste = (ArrayList<Etudiant>)input.readObject();
-			ListeEtudiants.getInstance().setListe(liste);
+			ArrayList<Etudiant> liste = (ArrayList<Etudiant>)input.readObject(); // Liste des etudiants
+			ListeEtudiants.getInstance().setListe(liste); // Initialisation de la liste des etudiants
 			
 			Comparateur c = new Comparateur();
 			
@@ -138,14 +155,17 @@ public class FileManip {
 		}
 	}
 	
+	// Methode permettant de charger les donnees des cours
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	private static void chargerCours() {
 		try(
 	      InputStream fichier = new FileInputStream("cours.ser");
 	      InputStream buffer = new BufferedInputStream(fichier);
 	      ObjectInput input = new ObjectInputStream (buffer);
 	    ){
-			ArrayList<Cours> liste = (ArrayList<Cours>)input.readObject();
-			ListeCours.getInstance().setListe(liste);
+			ArrayList<Cours> liste = (ArrayList<Cours>)input.readObject(); // Liste des cours
+			ListeCours.getInstance().setListe(liste); // Initialisation de la liste des cours
 			
 			Comparateur c = new Comparateur();
 			
@@ -161,17 +181,20 @@ public class FileManip {
 		}
 	}
 	
+	// Methode permettant de charger les donnees des inscriptions
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	private static void chargerInscription() {
 		try(
 	      InputStream fichier = new FileInputStream("inscriptions.ser");
 	      InputStream buffer = new BufferedInputStream(fichier);
 	      ObjectInput input = new ObjectInputStream (buffer);
 	    ){
-			ArrayList<Inscription> liste = (ArrayList<Inscription>)input.readObject();
+			ArrayList<Inscription> liste = (ArrayList<Inscription>)input.readObject(); // Liste des inscriptions
 			
 			for(Inscription i : liste) {
 				Etudiant e = i.getEtudiant();
-				e.ajouterCours(i);
+				e.ajouterCours(i); // Ajout de l'inscription d'un cours a un etudiant
 			}
 			
 	    }
@@ -183,7 +206,9 @@ public class FileManip {
 		}
 	}
 	
-	// serialisation de la liste des etudiants
+	// Methode permettant la serialisation de la liste des etudiants
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	private static void sauvegarderEtudiants() {
 		try {
 			OutputStream fichier = new FileOutputStream("etudiants.ser");
@@ -191,7 +216,7 @@ public class FileManip {
 			ObjectOutput sortie = new ObjectOutputStream(buffer);
 	      	      
 			try{
-	    	  sortie.writeObject(ListeEtudiants.getInstance().getListe());
+	    	  sortie.writeObject(ListeEtudiants.getInstance().getListe()); // Serialisation
 			}
 			finally{
 	    	  sortie.close();
@@ -202,7 +227,9 @@ public class FileManip {
 	    }
 	}
 	
-	// serialisation de la liste des cours
+	// Methode permettant la serialisation de la liste des cours
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	private static void sauvegarderCours() {
 		try {
 			OutputStream fichier = new FileOutputStream("cours.ser");
@@ -210,7 +237,7 @@ public class FileManip {
 			ObjectOutput sortie = new ObjectOutputStream(buffer);
 	      	      
 			try{
-	    	  sortie.writeObject(ListeCours.getInstance().getListe());
+	    	  sortie.writeObject(ListeCours.getInstance().getListe()); // Serialisation
 			}
 			finally{
 	    	  sortie.close();
@@ -221,12 +248,14 @@ public class FileManip {
 	    }
 	}
 	
-	// serialisation de la liste des inscriptions
+	// Methode permettant la serialisation de la liste des inscriptions
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	private static void sauvegarderInscription() {
 	
-		ArrayList<Inscription> listeTempo = new ArrayList<Inscription>();
+		ArrayList<Inscription> listeTempo = new ArrayList<Inscription>(); // Liste temporaires des inscriptions
 		
-		// parcourir toute les inscriptions de chaque etudiant
+		// Parcourir toute les inscriptions de chaque etudiant pour remplir la liste temporaire des inscriptions
 		for(Etudiant e : ListeEtudiants.getInstance().getListe()) {
 			Inscription inscription = e.getPremierCours();
 			
@@ -245,7 +274,7 @@ public class FileManip {
 			ObjectOutput sortie = new ObjectOutputStream(buffer);
 	      	      
 			try{
-	    	  sortie.writeObject(listeTempo);
+	    	  sortie.writeObject(listeTempo); // Serialisation
 			}
 			finally{
 	    	  sortie.close();

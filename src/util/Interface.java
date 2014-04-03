@@ -14,7 +14,9 @@ import model.ListeEtudiants;
 
 public class Interface {
 	
-	//lecture d'une entree au clavier
+	// Methode permettant d'effectuer une lecture au clavier
+	// Parametre : Aucun
+	// Valeur de retour : La chaine de caractere lue au clavier
 	public static String lecture ()
 	{
 		String str = "";
@@ -30,17 +32,22 @@ public class Interface {
 		return str;
 	}
 	
-	//vide la console
+	// Methode permettant d'effacer tout le texte se trouvant dans la console
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	public static void clearConsole()
 	{
 		System.out.print("\n\n\n\n");
 	}
 	
-	// valider si chiffre entree est un entier
+	// Methode permettant de valider un entier et s'il se trouve dans un intervalle donnee
+	// Parametre : Un nombre potentiel, Debut de l'intervalle, Fin de l'interface
+	// Valeur de retour : Valeur boolenne representant si le nombre est valide et s'il respecte l'intervalle donnee
 	public static boolean validerEntier(String valeur, int plageDebut, int plageFin)
 	{
 		int choixUtilisateur;
-
+		
+		// Test pour valider si la chaine de caractere correspond a un nombre entier
 		try { 
 			choixUtilisateur = Integer.parseInt(valeur); 
 	    } 
@@ -48,13 +55,16 @@ public class Interface {
 	        return false; 
 	    }
 		
+		// Test pour valider si le nombre se trouve dans l'intervalle donnee
 		if((choixUtilisateur >= plageDebut) && (choixUtilisateur <= plageFin))
 			return true;
 
 		return false;
 	}
 	
-	//Interface principale
+	// Methode permettant d'afficher le menu principal
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	public static void menuPrincipal()
 	{
 		
@@ -95,14 +105,14 @@ public class Interface {
 				clearConsole();
 				clearConsole();
 				
-				inscrireEtudiant();
+				inscrireEtudiant(); // Inscrire un etudiant a un cours
 				break;
 				
 			case "2" :
 				clearConsole();
 				clearConsole();
 				
-				annulerInscription();
+				annulerInscription(); // Annuler une inscription
 				System.out.println("L'inscription a ete annulee.");
 				lecture();
 				menuPrincipal();
@@ -112,28 +122,28 @@ public class Interface {
 				clearConsole();
 				clearConsole();
 				
-				modifierInscripton();
+				modifierInscripton(); // Modifier une inscription
 				break;
 			case "4" : 
 				clearConsole();
 				clearConsole();
-				afficherCoursEtudiant();
+				afficherCoursEtudiant(); // Afficher tous les cours d'un etudiant donne
 				break;
 			case "5" : 
 				clearConsole();
 				clearConsole();
-				afficherEtudiantCours();
+				afficherEtudiantCours(); // Affciher tous les etudiants inscrit a un cours
 				break;
 			case "6" : 
 				clearConsole();
 				clearConsole();
-				FileManip.sauvegarder();
+				FileManip.sauvegarder(); // Sauvegarder toutes les donnees dans des fichiers
 				menuPrincipal();
 				break;
 			case "7" : 
 				clearConsole();
 				clearConsole();
-				FileManip.charger();
+				FileManip.charger(); // Lire les donnees dans les fichiers
 				menuPrincipal();
 				break;
 				
@@ -144,12 +154,17 @@ public class Interface {
 		}
 		
 	}
-
+	
+	// Methode permettant de valider si une chaine de caractere correspond a un nombre reel
+	// Parametre : Une chaine de caractere
+	// Valeur de retour : Retourne vrai si la chaine de caractere est un nombre reel, sinon faux
 	public static boolean isNumeric(String s) {  
 	    return s.matches("[-+]?\\d*\\.?\\d+");  
 	}
 	
-	// valide s'il y a au moins un etudiant et un cours dans chacune des listes
+	// Methode permettant de valider s'il y a au moins un etudiant et un cours dans chacune des listes
+	// Parametre : Aucun
+	// Valeur de retour : Retourne vrai s'il y a au moins un etudiant et un cours dans chacune des liste, sinon faux
 	private static boolean validerEtudiantsEtCours() {
 		if (ListeEtudiants.getInstance().getListe().size() > 0 && ListeCours.getInstance().getListe().size() > 0)
 			return true;
@@ -163,21 +178,26 @@ public class Interface {
 		}
 		return false;
 	}
-
+	
+	// Methode permettant d'inscrire un etudiant a un cours
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	private static void inscrireEtudiant() {
-		String noEtudiant;
-		String noCours;
-		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
-		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
-		Etudiant etudiant;
-		Cours cours;
-		Inscription nouvelleInscription;
-		int itNoCours = 1;
-		int itNoEtudiant = 1;
-		int nbEtudiant = 0;
-		int nbCours = 0;
+		String noEtudiant;    // Numero d'un etudiant
+		String noCours;       // Numero d'un cours
+		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();           // Liste des cours
+		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe(); // Liste des etudiants
+		Etudiant etudiant;                 // Un etudiant
+		Cours cours;                       // Un cours
+		Inscription nouvelleInscription;   // La nouvelle inscription
+		int itNoCours = 1;                 // Compteur pour l'affichage des cours
+		int itNoEtudiant = 1;              // Compteur pour l'affichage des etudiants
+		int nbEtudiant = 0;                // Numero de l'etudiant saisi au clavier
+		int nbCours = 0;                   // Numero du cours saisi au clavier
 		
+		// Validation si les listes de cours et d'etudiants ne sont pas vides
 		if (validerEtudiantsEtCours()) {
+			// Parcours de la liste des etudiants
 			for (Etudiant e : listeEtudiant) {
 				System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
 				nbEtudiant++;
@@ -185,9 +205,10 @@ public class Interface {
 			
 			do {
 				System.out.print("\nEntrez numero de l'etudiant : ");
-				noEtudiant = lecture();
+				noEtudiant = lecture(); // Saisi du numero de l'etudiant par l'utilisateur
 			} while(Integer.parseInt(noEtudiant) < 1 || Integer.parseInt(noEtudiant) > nbEtudiant);
 			
+			// Parcours de la liste des cours
 			for (Cours c : listeCours) {
 				System.out.println(itNoCours++ + ". " + c.getSigle() + " " + c.getNom());
 				nbCours++;
@@ -195,7 +216,7 @@ public class Interface {
 			
 			do {
 				System.out.print("\nEntrez numero du cours : ");
-				noCours = lecture();
+				noCours = lecture(); // Saisi du numéro de cours par l'utilisateur
 			} while(Integer.parseInt(noCours) < 1 || Integer.parseInt(noCours) > nbCours);
 			
 			etudiant = listeEtudiant.get(Integer.parseInt(noEtudiant) - 1);
@@ -203,29 +224,34 @@ public class Interface {
 			
 			nouvelleInscription = new Inscription(etudiant, cours);
 			
-			etudiant.ajouterCours(nouvelleInscription);
-			cours.ajouterEtudiant(nouvelleInscription);
+			etudiant.ajouterCours(nouvelleInscription); // Permet d'ajouter une inscription a la liste chainee des inscriptions (Volet etudiant)
+			cours.ajouterEtudiant(nouvelleInscription); // Permet d'ajouter une inscription a la liste chainee des inscriptions (Volet cours)
 			
 			System.out.println("Inscription reussie");
 			lecture();
 		}
 		
-		menuPrincipal();
+		menuPrincipal(); // Affichage du menu principal
 	}
 	
+	// Methode permettant d'annuler une inscription
+	// Parametre : Aucun
+	// Valeur de retour : Un etudiant
 	private static Etudiant annulerInscription() {
-		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
-		int itNoCours = 1;
-		int itNoEtudiant = 1;
-		int nbEtudiant = 0;
-		int nbCours = 0;
-		String noEtudiant;
-		String noCours;
-		Etudiant etudiant;
-		Cours cours;
-		Inscription etudiantInscription;
+		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe(); // Liste des etudiants
+		int itNoCours = 1;             // Compteur pour l'affichage des cours
+		int itNoEtudiant = 1;          // Compteur pour l'affichage des etudiants
+		int nbEtudiant = 0;            // Numero de l'etudiant saisi au clavier
+		int nbCours = 0;               // Numero du cours saisi au clavier
+		String noEtudiant;             // Chaine de caractere du numero de l'etudiant lue au clavier
+		String noCours;                // Chaine de caractere du numero de cours lue au clavier
+		Etudiant etudiant;             // Un etudiant
+		Cours cours;                   // Un cours
+		Inscription etudiantInscription;  // L'inscription de l'etudiant au cours
 		
+		// Validation si les listes de cours et d'etudiants ne sont pas vides
 		if (validerEtudiantsEtCours()) {
+			// Parcours de la liste des etudiants
 			for (Etudiant e : listeEtudiant) {
 				System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
 				nbEtudiant++;
@@ -233,13 +259,14 @@ public class Interface {
 			
 			do {
 				System.out.print("Entrez numero de l'etudiant : ");
-				noEtudiant = lecture();
+				noEtudiant = lecture(); // Saisi du numero de l'etudiant par l'utilisateur
 			} while(Integer.parseInt(noEtudiant) < 1 || Integer.parseInt(noEtudiant) > nbEtudiant);
 			
 			etudiant = listeEtudiant.get(Integer.parseInt(noEtudiant) - 1);
 			
-			etudiantInscription = etudiant.getPremierCours();
+			etudiantInscription = etudiant.getPremierCours(); // Premier cours auquel l'etudiant est inscrit
 			
+			// Parcours de la liste des cours auxquels l'etudiant est inscrit
 			while(etudiantInscription != null) {
 				cours = etudiantInscription.getCours();
 				System.out.println(itNoCours++ + ". " + cours.getSigle() + " " + cours.getNom());
@@ -249,9 +276,10 @@ public class Interface {
 			
 			do {
 				System.out.print("Entrez numero du cours : ");
-				noCours = lecture();
+				noCours = lecture(); // Saisi du numero du cours au clavier
 			} while(Integer.parseInt(noCours) < 1 || Integer.parseInt(noCours) > nbCours);
 			
+			// Recherche de l'inscription de l'etudiant
 			int i = 1;
 			etudiantInscription = etudiant.getPremierCours();
 			while(i != Integer.parseInt(noCours)) {
@@ -261,26 +289,31 @@ public class Interface {
 			
 			cours = etudiantInscription.getCours();
 			
-			supprimerCours(etudiant, cours);
+			supprimerCours(etudiant, cours); // Suppression de l'inscription
 			
 			return etudiant;
 		
 		}
 		
-		return null;
+		return null; // Si une des liste (Cours/Etudiant) est vide, on retourne la valeur null
 	}
 	
+	// Methode permettant de supprimer le maillon d'une inscription
+	// Parametre : Un etudiant, un cours
+	// Valeur de retour : Aucun
 	private static void supprimerCours(Etudiant etudiant, Cours cours) {
-		Inscription etudiantInscription;
-		Inscription tempEtudiantInscription;
-		Inscription coursInscription;
-		Inscription tempCoursInscription;
+		Inscription etudiantInscription;       // L'inscription d'un etudiant
+		Inscription tempEtudiantInscription;   // Variable temporaire de l'inscription d'un etudiant
+		Inscription coursInscription;          // L'inscription a un cours
+		Inscription tempCoursInscription;      // Variable temporaire de l'inscription a un cours
 		
 		etudiantInscription = etudiant.getPremierCours();
 		tempEtudiantInscription = etudiantInscription;
 		
+		// Parcours des cours auxquels l'etudiant est inscrit
 		if(etudiantInscription != null) {
 			do {
+				// Si le cours de l'inscription correspond au cours que l'on veut supprimer, on sort de la boucle
 				if(etudiantInscription.getCours().equals(cours)) {
 					tempEtudiantInscription.setNextCours(etudiantInscription.getNextCours());
 					break;
@@ -295,8 +328,10 @@ public class Interface {
 		coursInscription = cours.getPremierEtudiant();
 		tempCoursInscription = coursInscription;
 		
+		// Parcours des etudiants inscrit a un cours
 		if(etudiantInscription != null) {
 			do {
+				// Si l'etudiant de l'inscription correspond a l'etudiant que l'on veut supprimer, on sort de la boucle
 				if(coursInscription.equals(etudiantInscription)) {
 					tempCoursInscription.setNextEtudiant(coursInscription.getNextEtudiant());
 					break;
@@ -309,18 +344,23 @@ public class Interface {
 		}
 	}
 	
+	// Methode permettant de modifier une inscription
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	private static void modifierInscripton() {
-		Etudiant etudiant;
-		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
-		int itNoCours = 1;
-		int nbCours = 0;
-		String noCours;
-		Cours cours;
-		Inscription nouvelleInscription;
+		Etudiant etudiant;      // Un etudiant
+		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe(); // Liste des cours
+		int itNoCours = 1;      // Compteur pour l'affichage des cours
+		int nbCours = 0;        // Compteur du nombre de cours
+		String noCours;         // Chaine de caractere du numero de cours lue au clavier
+		Cours cours;            // Un cours
+		Inscription nouvelleInscription; // Nouvelle inscription qui sera créer
 		
+		// Validation si les listes de cours et d'etudiants ne sont pas vides
 		if (validerEtudiantsEtCours()) {
-			etudiant = annulerInscription();
+			etudiant = annulerInscription(); // On utilise la methode permettant d'annuler une inscription
 			
+			// Parcours de la liste des cours
 			for (Cours c : listeCours) {
 				System.out.println(itNoCours++ + ". " + c.getSigle() + " " + c.getNom());
 				nbCours++;
@@ -328,27 +368,31 @@ public class Interface {
 			
 			do {
 				System.out.print("Entrez numero du cours : ");
-				noCours = lecture();
+				noCours = lecture(); // Saisi du numero de cours au clavier
 			} while(Integer.parseInt(noCours) < 1 || Integer.parseInt(noCours) > nbCours);
 			
 			cours = listeCours.get(Integer.parseInt(noCours) - 1);
 			
 			nouvelleInscription = new Inscription(etudiant, cours);
 			
-			etudiant.ajouterCours(nouvelleInscription);
-			cours.ajouterEtudiant(nouvelleInscription);
+			etudiant.ajouterCours(nouvelleInscription); // Permet d'ajouter une inscription a la liste chainee des inscriptions (Volet etudiant)
+			cours.ajouterEtudiant(nouvelleInscription); // Permet d'ajouter une inscription a la liste chainee des inscriptions (Volet cours)
+		
 		}
 		
-		menuPrincipal();
+		menuPrincipal(); // Affichage du menu principal
 	}
 
+	// Methode permettant de faire afficher les cours d'un etudiant (Methode de depart)
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	private static void afficherCoursEtudiant() {
 		
-		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
-		int i = 0;
-		int element;
-		Etudiant choix = null;
-		String choixEtudiant;
+		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe(); // Liste des etudiants
+		int i = 0;                // Compteur
+		int element;              // Nombre lu au clavier representant le numero d'un etudiant
+		Etudiant choix = null;    // Etudiant dont on veut faire afficher les cours
+		String choixEtudiant;     // Chaine de caractere lue au clavier representant un numero d'etudiant
 		
 		for (Etudiant etudiant : listeEtudiant) {
 			if (i % 3 == 0)
@@ -381,23 +425,30 @@ public class Interface {
 			System.out.println("Il n'y a pas d'etudiants");
 		
 		lecture();
-		menuPrincipal();
+		menuPrincipal(); // Affichage du menu principal
 	}
-
+	
+	// Methode recursive permettant de faire afficher les cours d'un etudiant
+	// Parametre : Une inscription
+	// Valeur de retour
 	private static void afficherCours(Inscription inscription) {
 		System.out.println(inscription.getCours().getSigle() + " | " + inscription.getCours().getNom());
 		
+		// Si l'etudiant est inscrit a un autre cours
 		if (inscription.getNextCours() != null)
 			afficherCours(inscription.getNextCours());
 	}
 	
+	// Methode permettant de faire afficher les etudiants inscrit a un cours (Methode de depart)
+	// Parametre : Aucun
+	// Valeur de retour : Aucun
 	private static void afficherEtudiantCours() {
 		
-		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
-		int i = 0;
-		int element;
-		Cours choix = null;
-		String choixCours;
+		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe(); // Liste des cours
+		int i = 0;                // Compteur
+		int element;              // Nombre lu au clavier representant le numero d'un cours
+		Cours choix = null;       // Cours dont on veut afficher les etudiants
+		String choixCours;        // Chaine de caractere lue au clavier representant un numero de cours
 		
 		for (Cours cours : listeCours) {
 			if (i % 3 == 0)
@@ -430,12 +481,16 @@ public class Interface {
 			System.out.println("Il n'y a pas de cours");
 		
 		lecture();
-		menuPrincipal();
+		menuPrincipal(); // Affichage du menu principal
 	}
 	
+	// Methode recursive permettant de faire afficher les etudiants inscrit a un cours 
+	// Parametre : Une inscription
+	// Valeur de retour : Aucun
 	private static void afficherEtudiant(Inscription inscription) {
 		System.out.println(inscription.getEtudiant().getNom() + ", " + inscription.getEtudiant().getPrenom() + " (" + inscription.getEtudiant().getCodePermanent() + ")");
 		
+		// S'il y a un autre etudiant inscrit au cours
 		if (inscription.getNextEtudiant() != null)
 			afficherEtudiant(inscription.getNextEtudiant());
 	}
