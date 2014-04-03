@@ -240,6 +240,8 @@ public class Interface {
 			
 			supprimerCours(etudiant, cours);
 			
+			System.out.println("L'inscription a ete annulee.");
+			lecture();
 			return etudiant;
 		
 		}
@@ -367,28 +369,34 @@ public class Interface {
 	private static void afficherEtudiantCours() {
 		
 		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
-		int i = 1;
+		int i = 0;
 		int element;
-		Cours choix;
+		Cours choix = null;
 		String choixCours;
 		
 		for (Cours cours : listeCours) {
 			if (i % 3 == 0)
-				System.out.println(i + ". " + cours.getSigle() + "\t");
+				System.out.println((i+1) + ". " + cours.getSigle() + "\t");
 			else
-				System.out.println(i + ". " + cours.getSigle());
+				System.out.println((i+1) + ". " + cours.getSigle());
 			i++;
 		}
+		
 		if (i > 1) {
-			System.out.println("Choisissez le cours dont vous voulez afficher les etudiants : ");
-			choixCours = Interface.lecture();
 			
-			element = Integer.parseInt(choixCours);
-			
-			choix = listeCours.get(element-1);
+			do {
+				System.out.println("Choisissez le cours dont vous voulez afficher les etudiants : ");
+				choixCours = Interface.lecture();
+				
+				element = isNumeric(choixCours) ? Integer.parseInt(choixCours) : -1;
+				
+				if(element > 0 && element <= i)
+					choix = listeCours.get(element-1);
+			} while( (element < 1 || element > i));
 			
 			if (choix.getPremierEtudiant() != null) {
-				System.out.println("Liste des etudiants du cours : ");
+				System.out.println("\nListe des etudiants du cours " + choix.getNom());
+				System.out.println("================================================");
 				afficherEtudiant(choix.getPremierEtudiant());
 			}
 			else
