@@ -229,7 +229,14 @@ public class Interface {
 			System.out.print("Entrez numero du cours : ");
 			noCours = lecture();
 			
-			cours = listeCours.get(Integer.parseInt(noCours) - 1);
+			int i = 1;
+			etudiantInscription = etudiant.getPremierCours();
+			while(i != Integer.parseInt(noCours)) {
+				etudiantInscription = etudiantInscription.getNextCours();
+				i++;
+			}
+			
+			cours = etudiantInscription.getCours();
 			
 			supprimerCours(etudiant, cours);
 			
