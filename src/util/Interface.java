@@ -14,6 +14,7 @@ import model.ListeEtudiants;
 
 public class Interface {
 	
+	//lecture d'une entree au clavier
 	public static String lecture ()
 	{
 		String str = "";
@@ -29,6 +30,7 @@ public class Interface {
 		return str;
 	}
 	
+	//vide la console
 	public static void clearConsole()
 	{
 		System.out.print("\n\n\n\n");
@@ -101,6 +103,8 @@ public class Interface {
 				clearConsole();
 				
 				annulerInscription();
+				System.out.println("L'inscription a ete annulee.");
+				lecture();
 				menuPrincipal();
 				break;
 				
@@ -145,6 +149,7 @@ public class Interface {
 	    return s.matches("[-+]?\\d*\\.?\\d+");  
 	}
 	
+	// valide s'il y a au moins un etudiant et un cours dans chacune des listes
 	private static boolean validerEtudiantsEtCours() {
 		if (ListeEtudiants.getInstance().getListe().size() > 0 && ListeCours.getInstance().getListe().size() > 0)
 			return true;
@@ -169,21 +174,29 @@ public class Interface {
 		Inscription nouvelleInscription;
 		int itNoCours = 1;
 		int itNoEtudiant = 1;
+		int nbEtudiant = 0;
+		int nbCours = 0;
 		
 		if (validerEtudiantsEtCours()) {
 			for (Etudiant e : listeEtudiant) {
 				System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
+				nbEtudiant++;
 			}
 			
-			System.out.print("Entrez numero de l'etudiant : ");
-			noEtudiant = lecture();
+			do {
+				System.out.print("\nEntrez numero de l'etudiant : ");
+				noEtudiant = lecture();
+			} while(Integer.parseInt(noEtudiant) < 1 || Integer.parseInt(noEtudiant) > nbEtudiant);
 			
 			for (Cours c : listeCours) {
 				System.out.println(itNoCours++ + ". " + c.getSigle() + " " + c.getNom());
+				nbCours++;
 			}
 			
-			System.out.print("Entrez numero du cours : ");
-			noCours = lecture();
+			do {
+				System.out.print("\nEntrez numero du cours : ");
+				noCours = lecture();
+			} while(Integer.parseInt(noCours) < 1 || Integer.parseInt(noCours) > nbCours);
 			
 			etudiant = listeEtudiant.get(Integer.parseInt(noEtudiant) - 1);
 			cours = listeCours.get(Integer.parseInt(noCours) - 1);
@@ -192,6 +205,9 @@ public class Interface {
 			
 			etudiant.ajouterCours(nouvelleInscription);
 			cours.ajouterEtudiant(nouvelleInscription);
+			
+			System.out.println("Inscription reussie");
+			lecture();
 		}
 		
 		menuPrincipal();
@@ -199,9 +215,10 @@ public class Interface {
 	
 	private static Etudiant annulerInscription() {
 		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
-		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
 		int itNoCours = 1;
 		int itNoEtudiant = 1;
+		int nbEtudiant = 0;
+		int nbCours = 0;
 		String noEtudiant;
 		String noCours;
 		Etudiant etudiant;
@@ -211,10 +228,13 @@ public class Interface {
 		if (validerEtudiantsEtCours()) {
 			for (Etudiant e : listeEtudiant) {
 				System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
+				nbEtudiant++;
 			}
 			
-			System.out.print("Entrez numero de l'etudiant : ");
-			noEtudiant = lecture();
+			do {
+				System.out.print("Entrez numero de l'etudiant : ");
+				noEtudiant = lecture();
+			} while(Integer.parseInt(noEtudiant) < 1 || Integer.parseInt(noEtudiant) > nbEtudiant);
 			
 			etudiant = listeEtudiant.get(Integer.parseInt(noEtudiant) - 1);
 			
@@ -224,10 +244,13 @@ public class Interface {
 				cours = etudiantInscription.getCours();
 				System.out.println(itNoCours++ + ". " + cours.getSigle() + " " + cours.getNom());
 				etudiantInscription = etudiantInscription.getNextCours();
+				nbCours++;
 			}
 			
-			System.out.print("Entrez numero du cours : ");
-			noCours = lecture();
+			do {
+				System.out.print("Entrez numero du cours : ");
+				noCours = lecture();
+			} while(Integer.parseInt(noCours) < 1 || Integer.parseInt(noCours) > nbCours);
 			
 			int i = 1;
 			etudiantInscription = etudiant.getPremierCours();
@@ -240,8 +263,6 @@ public class Interface {
 			
 			supprimerCours(etudiant, cours);
 			
-			System.out.println("L'inscription a ete annulee.");
-			lecture();
 			return etudiant;
 		
 		}
@@ -292,6 +313,7 @@ public class Interface {
 		Etudiant etudiant;
 		ArrayList<Cours> listeCours = ListeCours.getInstance().getListe();
 		int itNoCours = 1;
+		int nbCours = 0;
 		String noCours;
 		Cours cours;
 		Inscription nouvelleInscription;
@@ -301,10 +323,13 @@ public class Interface {
 			
 			for (Cours c : listeCours) {
 				System.out.println(itNoCours++ + ". " + c.getSigle() + " " + c.getNom());
+				nbCours++;
 			}
 			
-			System.out.print("Entrez numero du cours : ");
-			noCours = lecture();
+			do {
+				System.out.print("Entrez numero du cours : ");
+				noCours = lecture();
+			} while(Integer.parseInt(noCours) < 1 || Integer.parseInt(noCours) > nbCours);
 			
 			cours = listeCours.get(Integer.parseInt(noCours) - 1);
 			

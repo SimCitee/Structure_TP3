@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 public class Inscription implements Serializable {
 
-	private Etudiant etudiant;
-	private Inscription nextEtudiant;
-	private Cours cours;
-	private Inscription nextCours;
+	private Etudiant etudiant;			// etudiant suivant un cours
+	private Inscription nextEtudiant;	// pointe vers le prochain etudiant pour d'un cours
+	private Cours cours;				// cours suivi par un etudiant
+	private Inscription nextCours;		// pointe vers le prochain cours d'un etudiant
 	
 	public Inscription(Etudiant e, Cours c) {
 		this.etudiant = e;
