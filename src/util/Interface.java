@@ -144,6 +144,20 @@ public class Interface {
 	public static boolean isNumeric(String s) {  
 	    return s.matches("[-+]?\\d*\\.?\\d+");  
 	}
+	
+	private static boolean validerEtudiantsEtCours() {
+		if (ListeEtudiants.getInstance().getListe().size() > 0 && ListeCours.getInstance().getListe().size() > 0)
+			return true;
+		else {
+			if (ListeEtudiants.getInstance().getListe().size() == 0)
+				System.out.print("Il n'y a aucun etudiant existant.");
+			else
+				System.out.print("Il n'y a aucun cours existant.");
+			lecture();
+			clearConsole();
+		}
+		return false;
+	}
 
 	private static void inscrireEtudiant() {
 		String noEtudiant;
@@ -156,27 +170,29 @@ public class Interface {
 		int itNoCours = 1;
 		int itNoEtudiant = 1;
 		
-		for (Etudiant e : listeEtudiant) {
-			System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
+		if (validerEtudiantsEtCours()) {
+			for (Etudiant e : listeEtudiant) {
+				System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
+			}
+			
+			System.out.print("Entrez numero de l'etudiant : ");
+			noEtudiant = lecture();
+			
+			for (Cours c : listeCours) {
+				System.out.println(itNoCours++ + ". " + c.getSigle() + " " + c.getNom());
+			}
+			
+			System.out.print("Entrez numero du cours : ");
+			noCours = lecture();
+			
+			etudiant = listeEtudiant.get(Integer.parseInt(noEtudiant) - 1);
+			cours = listeCours.get(Integer.parseInt(noCours) - 1);
+			
+			nouvelleInscription = new Inscription(etudiant, cours);
+			
+			etudiant.ajouterCours(nouvelleInscription);
+			cours.ajouterEtudiant(nouvelleInscription);
 		}
-		
-		System.out.print("Entrez numero de l'etudiant : ");
-		noEtudiant = lecture();
-		
-		for (Cours c : listeCours) {
-			System.out.println(itNoCours++ + ". " + c.getSigle() + " " + c.getNom());
-		}
-		
-		System.out.print("Entrez numero du cours : ");
-		noCours = lecture();
-		
-		etudiant = listeEtudiant.get(Integer.parseInt(noEtudiant) - 1);
-		cours = listeCours.get(Integer.parseInt(noCours) - 1);
-		
-		nouvelleInscription = new Inscription(etudiant, cours);
-		
-		etudiant.ajouterCours(nouvelleInscription);
-		cours.ajouterEtudiant(nouvelleInscription);
 		
 		menuPrincipal();
 	}
@@ -192,31 +208,36 @@ public class Interface {
 		Cours cours;
 		Inscription etudiantInscription;
 		
-		for (Etudiant e : listeEtudiant) {
-			System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
+		if (validerEtudiantsEtCours()) {
+			for (Etudiant e : listeEtudiant) {
+				System.out.println(itNoEtudiant++ + ". " + e.getCodePermanent() + " " + e.getPrenom() + " " + e.getNom());
+			}
+			
+			System.out.print("Entrez numero de l'etudiant : ");
+			noEtudiant = lecture();
+			
+			etudiant = listeEtudiant.get(Integer.parseInt(noEtudiant) - 1);
+			
+			etudiantInscription = etudiant.getPremierCours();
+			
+			while(etudiantInscription != null) {
+				cours = etudiantInscription.getCours();
+				System.out.println(itNoCours++ + ". " + cours.getSigle() + " " + cours.getNom());
+				etudiantInscription = etudiantInscription.getNextCours();
+			}
+			
+			System.out.print("Entrez numero du cours : ");
+			noCours = lecture();
+			
+			cours = listeCours.get(Integer.parseInt(noCours) - 1);
+			
+			supprimerCours(etudiant, cours);
+			
+			return etudiant;
+		
 		}
 		
-		System.out.print("Entrez numero de l'etudiant : ");
-		noEtudiant = lecture();
-		
-		etudiant = listeEtudiant.get(Integer.parseInt(noEtudiant) - 1);
-		
-		etudiantInscription = etudiant.getPremierCours();
-		
-		while(etudiantInscription != null) {
-			cours = etudiantInscription.getCours();
-			System.out.println(itNoCours++ + ". " + cours.getSigle() + " " + cours.getNom());
-			etudiantInscription = etudiantInscription.getNextCours();
-		}
-		
-		System.out.print("Entrez numero du cours : ");
-		noCours = lecture();
-		
-		cours = listeCours.get(Integer.parseInt(noCours) - 1);
-		
-		supprimerCours(etudiant, cours);
-		
-		return etudiant;
+		return null;
 	}
 	
 	private static void supprimerCours(Etudiant etudiant, Cours cours) {
@@ -266,21 +287,23 @@ public class Interface {
 		Cours cours;
 		Inscription nouvelleInscription;
 		
-		etudiant = annulerInscription();
-		
-		for (Cours c : listeCours) {
-			System.out.println(itNoCours++ + ". " + c.getSigle() + " " + c.getNom());
+		if (validerEtudiantsEtCours()) {
+			etudiant = annulerInscription();
+			
+			for (Cours c : listeCours) {
+				System.out.println(itNoCours++ + ". " + c.getSigle() + " " + c.getNom());
+			}
+			
+			System.out.print("Entrez numero du cours : ");
+			noCours = lecture();
+			
+			cours = listeCours.get(Integer.parseInt(noCours) - 1);
+			
+			nouvelleInscription = new Inscription(etudiant, cours);
+			
+			etudiant.ajouterCours(nouvelleInscription);
+			cours.ajouterEtudiant(nouvelleInscription);
 		}
-		
-		System.out.print("Entrez numero du cours : ");
-		noCours = lecture();
-		
-		cours = listeCours.get(Integer.parseInt(noCours) - 1);
-		
-		nouvelleInscription = new Inscription(etudiant, cours);
-		
-		etudiant.ajouterCours(nouvelleInscription);
-		cours.ajouterEtudiant(nouvelleInscription);
 		
 		menuPrincipal();
 	}
@@ -288,33 +311,38 @@ public class Interface {
 	private static void afficherCoursEtudiant() {
 		
 		ArrayList<Etudiant> listeEtudiant = ListeEtudiants.getInstance().getListe();
-		int i = 1;
+		int i = 0;
 		int element;
-		Etudiant choix;
+		Etudiant choix = null;
 		String choixEtudiant;
 		
 		for (Etudiant etudiant : listeEtudiant) {
 			if (i % 3 == 0)
-				System.out.println(i + ". " + etudiant.getCodePermanent() + "\t");
+				System.out.println((i+1) + ". " + etudiant.getCodePermanent() + "\t");
 			else
-				System.out.println(i + ". " + etudiant.getCodePermanent());
+				System.out.println((i+1) + ". " + etudiant.getCodePermanent());
 			i++;
 		}
-		
+				
 		if (i > 1) {
-			System.out.println("Choisissez l'etudiant dont vous voulez afficher les cours : ");
-			choixEtudiant = Interface.lecture();
 			
-			element = Integer.parseInt(choixEtudiant);
-			
-			choix = listeEtudiant.get(element-1);
+			do {
+				System.out.println("Choisissez l'etudiant dont vous voulez afficher les cours : ");
+				choixEtudiant = Interface.lecture();
+				
+				element = isNumeric(choixEtudiant) ? Integer.parseInt(choixEtudiant) : -1;
+				
+				if(element > 0 && element <= i)
+					choix = listeEtudiant.get(element-1);
+			} while( (element < 1 || element > i));
 			
 			if (choix.getPremierCours() != null) {
-				System.out.println("Liste des cours de l'etudiant : ");
+				System.out.println("\nListe des cours de " + choix.getPrenom() + " " + choix.getNom());
+				System.out.println("================================================");
 				afficherCours(choix.getPremierCours());
 			}
 			else
-				System.out.println("L'etudiant choisit n'est inscrit a� aucun cours!");
+				System.out.println("L'etudiant choisit n'est inscrit a aucun cours!");
 		} else
 			System.out.println("Il n'y a pas d'etudiants");
 		

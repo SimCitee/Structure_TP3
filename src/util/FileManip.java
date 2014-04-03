@@ -95,8 +95,13 @@ public class FileManip {
 	}
 	
 	public static void sauvegarder() {
-		sauvegarderEtudiants();
-		sauvegarderCours();
+		
+		if(ListeEtudiants.getInstance().getListe().size() > 0)
+			sauvegarderEtudiants();
+		
+		if(ListeCours.getInstance().getListe().size() > 0)
+			sauvegarderCours();
+		
 		sauvegarderInscription();
 		
 		System.out.println("Les donnees ont ete enregistrees dans les fichiers.");
